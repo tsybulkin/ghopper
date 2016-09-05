@@ -25,14 +25,28 @@ class Robot():
 		self.metastate = "jumping"
 		
 	def next_pos(self,tau):
-		if metastate 	== "flying": self.fly(tau)
-		elif metastate 	== "jumping": self.jump(tau)
+		if metastate 	== "flying": 
+			self.q += self.fly(tau)
+
+		elif metastate 	== "jumping": 
+			dq1 = self.jump(tau)
+			self.q += dq1
+			if self.q[3] < 0.1: self.metastate = "flying" 
 
 
 	def jump(self, tau):
 		C = np.array([
-			eqs.get_c1(self.q,self.q_d,self.psi),
-			eqs.get_c2(self.q,self.q_d,self.psi),
+			eq-jumping.get_c1(self.q,self.dq),
+			eq-jumping.get_c2(self.q,self.dq),
+			eq-jumping.get_c3(self.q,self.dq)
 			])
+		D = - np.array([
+			eq-jumping.get_d1(self.q, self.dq),
+			eq-jumping.get_d2(self.q,self.dq),
+			eq-jumping.get_d3(self.q,self.dq)
+			])
+		return self.dq + np.hstack([np.zeros(2),tau * np.linalg.inv(C).dot(D)])
 
+	def fly(self,tau):
+		return np.zeros(5)
 
