@@ -48,5 +48,5 @@ def get_c3(q,dq):
 def get_d3(q,dq):
 	a,b,g = q
 	da,db,dg = dq
-	return
+	return 0.
 
